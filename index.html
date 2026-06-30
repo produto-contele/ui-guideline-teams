@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contele Teams · UI Style Guideline</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    :root{
+        /* Tokens REAIS da UI do Contele Teams (documentados com o Douglas) */
+        --ui-primary:#4a58ff;          /* única cor de destaque da interface */
+        --ui-main-nav-bg:#e9ecf8;      /* fundo do menu principal */
+        --ui-main-sel-bg:#f4f5fb;      /* fundo do item selecionado (menu principal) */
+        --ui-main-sel-text:#686b8f;    /* texto do item selecionado (menu principal) */
+        --ui-sec-text:#787d94;         /* texto do menu secundário */
+        --ui-sec-sel-bg:#e2e3f5;       /* fundo da aba selecionada (menu secundário) */
+        --ui-card-bg:#f4f5fb;          /* fundo de card */
+        --ui-card-text:#20252e;        /* texto de card */
+        --ui-chip-bg:#e9ecf8;          /* fundo do chip de filtro aplicado */
+
+        /* Cores de DADO (só vivem em gráficos/indicadores, nunca no chrome) */
+        --data-positive:#10b981;       /* tendência positiva */
+        --data-negative:#ef4444;       /* tendência negativa / ação destrutiva (UI) */
+        --data-neutral:#94a3b8;        /* tendência neutra */
+
+        /* Chrome do DOCUMENTO (padrão dos docs Contele) */
+        --doc-bg:#f4f7fb;
+        --doc-card:#ffffff;
+        --doc-border:#e2e8f0;
+        --doc-ink:#0f172a;
+        --doc-ink-soft:#475569;
+        --doc-muted:#64748b;
+        --doc-line:#bfdbfe;
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box;}
+
+    body{
+        font-family:'Inter',sans-serif;
+        background:var(--doc-bg);
+        color:var(--doc-ink);
+        padding:40px 20px 120px;
+        line-height:1.6;
+        -webkit-font-smoothing:antialiased;
+    }
+
+    .wrap{max-width:1080px;margin:0 auto;}
+
+    /* ---------- HERO ---------- */
+    .hero{
+        background:var(--doc-card);
+        border:1px solid var(--doc-border);
+        border-radius:20px;
+        padding:56px 60px;
+        box-shadow:0 10px 40px rgba(0,0,0,.04);
+        position:relative;
+        overflow:hidden;
+    }
+    .hero::after{
+        content:'';position:absolute;right:-80px;top:-80px;width:320px;height:320px;
+        background:radial-gradient(circle, rgba(74,88,255,.10), transparent 70%);
+    }
+    .eyebrow{
+        color:var(--ui-primary);font-size:13px;font-weight:700;text-transform:uppercase;
+        letter-spacing:1.8px;margin-bottom:16px;display:flex;align-items:center;gap:8px;
+    }
+    .hero h1{font-size:46px;font-weight:800;letter-spacing:-1.4px;color:#111827;margin-bottom:18px;line-height:1.08;}
+    .hero h1 span{color:var(--ui-primary);}
+    .hero p{font-size:17px;color:var(--doc-ink-soft);max-width:760px;line-height:1.7;}
+
+    .hero-meta{display:flex;gap:36px;margin-top:36px;flex-wrap:wrap;}
+    .hero-meta .m{border-left:2px solid var(--doc-border);padding-left:16px;}
+    .hero-meta .m:first-child{border-left:none;padding-left:0;}
+    .hero-meta .m b{display:block;font-size:13px;color:var(--doc-muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+    .hero-meta .m span{font-size:15px;font-weight:600;color:#1e293b;}
+
+    /* ---------- NAV DE ÂNCORAS ---------- */
+    .anchor-nav{
+        display:flex;flex-wrap:wrap;gap:8px;margin:28px auto 0;
+        position:sticky;top:12px;z-index:40;
+        background:rgba(244,247,251,.86);backdrop-filter:blur(8px);
+        padding:10px;border-radius:14px;
+    }
+    .anchor-nav a{
+        font-size:13px;font-weight:600;text-decoration:none;color:#475569;
+        background:#fff;border:1px solid var(--doc-border);padding:7px 13px;border-radius:999px;
+        transition:all .15s;display:flex;align-items:center;gap:7px;
+    }
+    .anchor-nav a:hover{border-color:var(--ui-primary);color:var(--ui-primary);}
+    .anchor-nav a i{font-size:12px;opacity:.6;}
+    .anchor-nav a:hover i{opacity:1;}
+
+    /* ---------- SEÇÕES ---------- */
+    section{
+        background:var(--doc-card);
+        border:1px solid var(--doc-border);
+        border-radius:18px;
+        padding:44px 50px;
+        margin-top:28px;
+        box-shadow:0 8px 30px rgba(0,0,0,.03);
+        scroll-margin-top:80px;
+    }
+    .sec-num{
+        display:inline-flex;align-items:center;justify-content:center;
+        width:34px;height:34px;border-radius:10px;background:var(--ui-sec-sel-bg);
+        color:var(--ui-primary);font-weight:800;font-size:15px;margin-bottom:16px;
+    }
+    section h2{font-size:30px;font-weight:800;letter-spacing:-.6px;color:#111827;margin-bottom:10px;}
+    section h2 span{color:var(--ui-primary);}
+    .lead{font-size:16px;color:var(--doc-ink-soft);margin-bottom:30px;max-width:760px;}
+
+    h3{font-size:18px;font-weight:700;color:#1e293b;margin:32px 0 14px;display:flex;align-items:center;gap:10px;}
+    h3 i{color:var(--ui-primary);font-size:16px;}
+    h4{font-size:14px;font-weight:700;color:#334155;margin:20px 0 10px;text-transform:uppercase;letter-spacing:.6px;}
+    p{color:#334155;margin-bottom:12px;}
+    .muted{color:var(--doc-muted);font-size:14px;}
+
+    /* listas com ícone */
+    ul.ico{list-style:none;}
+    ul.ico li{position:relative;padding-left:28px;margin-bottom:12px;font-size:15px;color:#334155;line-height:1.6;}
+    ul.ico li strong{color:#0f172a;}
+    ul.do li::before{content:'\f00c';color:var(--data-positive);}
+    ul.dont li::before{content:'\f00d';color:var(--data-negative);}
+    ul.dot li::before{content:'\f111';color:var(--ui-primary);font-size:8px;top:7px;}
+    ul.ico li::before{font-family:'Font Awesome 6 Free';font-weight:900;position:absolute;left:0;top:3px;font-size:13px;}
+
+    /* ---------- SWATCHES ---------- */
+    .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin:18px 0;}
+    .sw{border:1px solid var(--doc-border);border-radius:12px;overflow:hidden;background:#fff;}
+    .sw .chip{height:64px;display:flex;align-items:flex-end;padding:8px;}
+    .sw .meta{padding:10px 12px;}
+    .sw .meta b{font-size:13px;color:#1e293b;display:block;}
+    .sw .meta code{font-size:12px;color:var(--doc-muted);font-family:'SFMono-Regular',Menlo,monospace;}
+    .sw .meta small{display:block;font-size:11.5px;color:var(--doc-muted);margin-top:3px;line-height:1.4;}
+
+    /* tabelas */
+    table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;}
+    th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--doc-border);vertical-align:top;}
+    th{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--doc-muted);font-weight:700;background:#fafbfd;}
+    td code{background:#f1f5f9;padding:2px 7px;border-radius:5px;font-size:12.5px;font-family:'SFMono-Regular',Menlo,monospace;color:#0f172a;}
+
+    /* callouts */
+    .aside{display:flex;gap:14px;padding:16px 18px;border-radius:12px;margin:18px 0;font-size:14.5px;line-height:1.6;}
+    .aside i{font-size:18px;margin-top:2px;flex-shrink:0;}
+    .aside.tip{background:#eef0ff;border:1px solid #d7daff;}
+    .aside.tip i{color:var(--ui-primary);}
+    .aside.warn{background:#fff7ed;border:1px solid #fed7aa;}
+    .aside.warn i{color:#f59e0b;}
+    .aside.info{background:var(--ui-chip-bg);border:1px solid #d6dbf3;}
+    .aside.info i{color:var(--ui-primary);}
+    .aside b{color:#0f172a;}
+
+    /* badge "provisório" */
+    .tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;text-transform:uppercase;letter-spacing:.5px;vertical-align:middle;margin-left:10px;}
+    .tag.prov{background:#fff7ed;color:#b45309;border:1px solid #fed7aa;}
+    .tag.todo{background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0;}
+    .tag.ok{background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;}
+
+    /* ---------- DEMOS DE COMPONENTE ---------- */
+    .demo{border:1px dashed #cbd5e1;border-radius:14px;padding:24px;margin:16px 0;background:#fcfdff;}
+    .demo-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--doc-muted);margin-bottom:14px;}
+
+    .btn{font-family:'Nunito Sans',sans-serif;border:none;border-radius:9px;padding:10px 18px;font-size:14px;font-weight:700;cursor:default;display:inline-flex;align-items:center;gap:8px;}
+    .btn-primary{background:var(--ui-primary);color:#fff;}
+    .btn-secondary{background:#e6e8ef;color:var(--ui-primary);}
+    .btn-success{background:#16a34a;color:#fff;}
+    .btn-danger{background:transparent;color:var(--data-negative);font-weight:700;}
+    .btn-ghost{background:transparent;color:var(--ui-primary);font-weight:700;}
+
+    /* toolbar demo */
+    .toolbar{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--doc-border);border-radius:12px;padding:10px 12px;font-family:'Nunito Sans',sans-serif;}
+    .toolbar .left{display:flex;align-items:center;gap:8px;}
+    .toolbar .right{margin-left:auto;display:flex;align-items:center;gap:8px;}
+    .tb-btn{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:#475569;background:#fff;border:1px solid var(--doc-border);border-radius:8px;padding:8px 12px;}
+    .tb-btn i{color:var(--ui-primary);font-size:13px;}
+    .tb-chip{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:#475569;background:var(--ui-chip-bg);border-radius:8px;padding:8px 12px;}
+
+    /* menu states demo */
+    .nav-demo{display:flex;gap:8px;flex-wrap:wrap;font-family:'Nunito Sans',sans-serif;}
+    .nav-main{background:var(--ui-main-nav-bg);border-radius:12px;padding:8px;display:flex;gap:6px;}
+    .nav-main .item{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:600;color:#5b6072;padding:9px 14px;border-radius:9px;}
+    .nav-main .item.sel{background:var(--ui-main-sel-bg);color:var(--ui-main-sel-text);}
+    .nav-sec{display:flex;gap:8px;padding:8px 0;}
+    .nav-sec .tab{font-size:14px;font-weight:600;color:var(--ui-sec-text);padding:9px 16px;border-radius:999px;border:1px solid transparent;}
+    .nav-sec .tab.sel{background:var(--ui-sec-sel-bg);color:var(--ui-primary);border-color:var(--ui-primary);}
+
+    /* contextual bar demo */
+    .ctx-bar{display:inline-flex;align-items:center;gap:22px;background:#fff;border:1px solid var(--doc-border);border-radius:12px;padding:12px 20px;box-shadow:0 8px 24px rgba(0,0,0,.08);font-family:'Nunito Sans',sans-serif;}
+    .ctx-bar .check{width:26px;height:26px;border-radius:7px;background:var(--ui-primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;}
+    .ctx-bar .act{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:600;color:#3a4150;}
+    .ctx-bar .act.del{color:var(--data-negative);}
+
+    /* kpi demo */
+    .kpi{background:var(--ui-card-bg);border:1px solid #e6e9f5;border-radius:14px;padding:18px 20px;width:260px;font-family:'Nunito Sans',sans-serif;}
+    .kpi .top{display:flex;justify-content:space-between;align-items:center;color:#6b7280;font-size:13px;font-weight:600;}
+    .kpi .val{font-size:30px;font-weight:800;color:var(--ui-card-text);margin:6px 0;}
+    .kpi .trend{font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px;}
+    .kpi .trend.up{color:var(--data-positive);}
+    .kpi .trend.down{color:var(--data-negative);}
+    .kpi .trend.flat{color:var(--data-neutral);}
+    .kpi .trend span{color:#94a3b8;font-weight:500;}
+
+    /* banner demo */
+    .ui-banner{display:flex;align-items:center;gap:12px;background:var(--ui-chip-bg);border:1px solid #d6dbf3;border-radius:10px;padding:12px 16px;font-family:'Nunito Sans',sans-serif;font-size:14px;color:#475569;}
+    .ui-banner > i{color:var(--ui-primary);font-size:16px;}
+    .ui-banner .link{margin-left:auto;color:var(--ui-primary);font-weight:700;}
+    .ui-banner .x{color:#94a3b8;}
+
+    /* tabela demo */
+    .tbl-wrap{border:1px solid var(--doc-border);border-radius:12px;overflow:hidden;font-family:'Nunito Sans',sans-serif;background:#fff;}
+    .tbl-top{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--doc-border);font-size:13px;color:#94a3b8;}
+    .tbl-row{display:grid;grid-template-columns:34px 2fr 1.4fr 1fr;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #eef1f6;font-size:14px;}
+    .tbl-row:last-child{border-bottom:none;}
+    .tbl-row.head{font-size:12px;text-transform:uppercase;letter-spacing:.4px;color:#94a3b8;font-weight:700;background:#fafbfd;}
+    .tbl-row.head .col{display:flex;align-items:center;gap:6px;}
+    .tbl-row .chk{width:18px;height:18px;border:1.5px solid #cbd5e1;border-radius:5px;}
+    .tbl-row .user{display:flex;align-items:center;gap:10px;}
+    .tbl-row .ava{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#a5b4fc,#818cf8);flex-shrink:0;}
+    .tbl-row .nm{font-weight:700;color:#1e293b;}
+    .tbl-row .doc{font-size:12px;color:#94a3b8;}
+    .tbl-row .sort{font-size:10px;opacity:.5;}
+    .tbl-row .grip{font-size:10px;opacity:.35;}
+    .tbl-row .exp{color:#cbd5e1;}
+
+    /* tags / badges */
+    .pill-tag{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:5px 11px;border-radius:999px;border:1px solid;}
+    .pill-tag.etq{color:#16a34a;border-color:#bbf7d0;background:#f0fdf4;}
+    .pill-tag.cart{color:#64748b;border-color:var(--doc-border);background:#fff;}
+    .pill-tag .more{background:#eef0ff;color:var(--ui-primary);border-radius:999px;padding:1px 7px;font-size:11px;font-weight:700;margin-left:2px;}
+
+    /* toggle segmentado */
+    .segmented{display:inline-flex;background:#fff;border:1px solid var(--doc-border);border-radius:999px;padding:4px;font-family:'Nunito Sans',sans-serif;}
+    .segmented .seg{font-size:14px;font-weight:600;color:#94a3b8;padding:7px 18px;border-radius:999px;}
+    .segmented .seg.on{background:#f1f5f9;color:#1e293b;}
+
+    /* medidor de licenças */
+    .meter{display:inline-flex;align-items:center;gap:9px;border:1px solid #fecaca;background:#fef2f2;color:#dc2626;border-radius:999px;padding:7px 14px;font-family:'Nunito Sans',sans-serif;font-size:14px;font-weight:600;}
+    .meter .ring{width:18px;height:18px;border-radius:50%;border:3px solid #fca5a5;border-top-color:#dc2626;}
+
+    /* estados demo */
+    .states-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;font-family:'Nunito Sans',sans-serif;}
+    .st-card{border:1px solid var(--doc-border);border-radius:12px;padding:16px;background:#fff;}
+    .st-card .st-name{font-family:'Inter';font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--doc-muted);margin-bottom:12px;}
+    .st-btn{border:none;border-radius:8px;padding:9px 16px;font-size:14px;font-weight:700;display:inline-flex;align-items:center;gap:8px;font-family:'Nunito Sans';}
+    .st-default{background:var(--ui-primary);color:#fff;}
+    .st-hover{background:#3a47e0;color:#fff;box-shadow:0 4px 12px rgba(74,88,255,.35);}
+    .st-disabled{background:#e2e8f0;color:#94a3b8;}
+    .st-loading{background:var(--ui-primary);color:#fff;opacity:.85;}
+    .st-empty{text-align:center;color:#94a3b8;padding:8px;}
+    .st-empty i{font-size:26px;display:block;margin-bottom:8px;opacity:.5;}
+    .st-error{color:var(--data-negative);font-size:13px;display:flex;align-items:center;gap:7px;}
+    .spin{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;}
+    @keyframes sp{to{transform:rotate(360deg);}}
+
+    /* divisor */
+    .divider{width:90px;height:4px;background:var(--doc-border);border-radius:4px;margin:0 auto;}
+
+    /* type scale demo */
+    .type-row{display:flex;align-items:baseline;gap:18px;border-bottom:1px solid var(--doc-border);padding:12px 0;font-family:'Nunito Sans',sans-serif;}
+    .type-row .sample{color:var(--ui-card-text);flex:1;}
+    .type-row .spec{font-family:'Inter';font-size:12.5px;color:var(--doc-muted);white-space:nowrap;}
+
+    footer{text-align:center;margin-top:40px;color:var(--doc-muted);font-size:13px;}
+    footer b{color:#475569;}
+
+    @media(max-width:720px){
+        .hero,section{padding:30px 24px;}
+        .hero h1{font-size:34px;}
+        section h2{font-size:24px;}
+    }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+    <!-- HERO -->
+    <div class="hero">
+        <div class="eyebrow"><i class="fa-solid fa-swatchbook"></i> Contele Teams · Design</div>
+        <h1>UI Style <span>Guideline</span></h1>
+        <p>O manual visual das telas web do Contele Teams. Reúne as regras de cor, tipografia, layout, componentes e iconografia que todo designer — atual ou futuro — deve seguir para criar telas consistentes com o produto.</p>
+        <div class="hero-meta">
+            <div class="m"><b>Plataforma</b><span>Web · Contele Teams</span></div>
+            <div class="m"><b>Base de componentes</b><span>shadcn/ui</span></div>
+            <div class="m"><b>Versão</b><span>v2 · em refinamento</span></div>
+        </div>
+    </div>
+
+    <!-- NAV DE ÂNCORAS -->
+    <nav class="anchor-nav">
+        <a href="#s1"><i class="fa-solid fa-compass"></i> Princípios</a>
+        <a href="#s2"><i class="fa-solid fa-palette"></i> Cores</a>
+        <a href="#s3"><i class="fa-solid fa-font"></i> Tipografia</a>
+        <a href="#s4"><i class="fa-solid fa-table-columns"></i> Layout</a>
+        <a href="#s5"><i class="fa-solid fa-cube"></i> Componentes</a>
+        <a href="#s6"><i class="fa-solid fa-icons"></i> Iconografia</a>
+        <a href="#s7"><i class="fa-solid fa-toggle-on"></i> Estados</a>
+        <a href="#s8"><i class="fa-solid fa-circle-check"></i> Boas práticas</a>
+        <a href="#s9"><i class="fa-solid fa-clipboard-check"></i> Checklist</a>
+    </nav>
+
+    <!-- 1. PRINCÍPIOS -->
+    <section id="s1">
+        <div class="sec-num">1</div>
+        <h2>Princípios</h2>
+        <p class="lead">Antes das regras, a filosofia. Estes são os três princípios que explicam <em>por que</em> as telas do Contele Teams se parecem entre si.</p>
+
+        <h3><i class="fa-solid fa-droplet"></i> A interface é monocromática no azul</h3>
+        <p>O Contele Teams tem <strong>uma única cor de destaque na interface: o azul <code>#4a58ff</code></strong>. Botões de ação, estados ativos, ícones de filtro e links usam esse azul — e só ele. Não existem botões verdes, laranjas ou de outras cores no chrome da interface.</p>
+
+        <div class="aside tip">
+            <i class="fa-solid fa-lightbulb"></i>
+            <div><b>Regra-mãe: "cor de UI" ≠ "cor de dado".</b> A interface (botões, menus, abas) é monocromática no azul. Cores como verde, ciano, laranja ou vermelho só aparecem como <b>codificação de informação</b> dentro de gráficos e indicadores — nunca como decoração ou no chrome da tela.</div>
+        </div>
+
+        <h3><i class="fa-solid fa-cubes"></i> Componentes vêm do shadcn/ui</h3>
+        <p>A biblioteca base de componentes é o <strong>shadcn/ui</strong> (<span class="muted">ui.shadcn.com</span>). Ela é o ponto de partida — as regras deste guia definem como o Contele Teams customiza e usa esses componentes.</p>
+
+        <h3><i class="fa-solid fa-users"></i> Para quem é este guia</h3>
+        <p>Para o designer de produto do Contele Teams e para qualquer pessoa que entre no time e precise criar ou revisar telas web sem ter o contexto histórico na cabeça.</p>
+    </section>
+
+    <!-- 2. CORES -->
+    <section id="s2">
+        <div class="sec-num">2</div>
+        <h2><span>Cores</span></h2>
+        <p class="lead">Os tokens de cor do Contele Teams, separados por função. A interface usa o azul; as demais cores são reservadas a dado ou a significados específicos.</p>
+
+        <h3><i class="fa-solid fa-star"></i> Cor primária da UI</h3>
+        <div class="swatches">
+            <div class="sw"><div class="chip" style="background:#4a58ff;"></div><div class="meta"><b>Primária</b><code>#4a58ff</code><small>Ações, estados ativos, ícones de filtro, links</small></div></div>
+        </div>
+
+        <h3><i class="fa-solid fa-layer-group"></i> Tons de interface (cinzas & fundos)</h3>
+        <div class="swatches">
+            <div class="sw"><div class="chip" style="background:#e9ecf8;"></div><div class="meta"><b>Fundo menu principal</b><code>#e9ecf8</code><small>Também usado no chip de filtro aplicado</small></div></div>
+            <div class="sw"><div class="chip" style="background:#f4f5fb;border-bottom:1px solid #e2e8f0;"></div><div class="meta"><b>Fundo de card / item selec. (menu principal)</b><code>#f4f5fb</code></div></div>
+            <div class="sw"><div class="chip" style="background:#e2e3f5;"></div><div class="meta"><b>Fundo aba selec. (menu secundário)</b><code>#e2e3f5</code></div></div>
+            <div class="sw"><div class="chip" style="background:#686b8f;"></div><div class="meta"><b>Texto item selec. (menu principal)</b><code>#686b8f</code></div></div>
+            <div class="sw"><div class="chip" style="background:#787d94;"></div><div class="meta"><b>Texto menu secundário</b><code>#787d94</code></div></div>
+            <div class="sw"><div class="chip" style="background:#20252e;"></div><div class="meta"><b>Texto de card</b><code>#20252e</code></div></div>
+        </div>
+
+        <h3><i class="fa-solid fa-chart-simple"></i> Cores de dado &amp; significado</h3>
+        <div class="swatches">
+            <div class="sw"><div class="chip" style="background:#10b981;"></div><div class="meta"><b>Verde · positivo</b><code>#10b981</code><small>Tendência de alta + logo. Não é cor de UI</small></div></div>
+            <div class="sw"><div class="chip" style="background:#16a34a;"></div><div class="meta"><b>Verde · CTA exceção</b><code>#16a34a</code><small>Só botão "contratar/expandir licenças"</small></div></div>
+            <div class="sw"><div class="chip" style="background:#ef4444;"></div><div class="meta"><b>Vermelho</b><code>a confirmar</code><small>Ação destrutiva (UI) + queda (dado)</small></div></div>
+            <div class="sw"><div class="chip" style="background:#94a3b8;"></div><div class="meta"><b>Cinza · neutro</b><code>a confirmar</code><small>Tendência sem variação (—)</small></div></div>
+        </div>
+
+        <h3><i class="fa-solid fa-triangle-exclamation"></i> O duplo papel do vermelho</h3>
+        <p>O vermelho é a única cor com dois papéis. O designer não pode confundi-los:</p>
+        <table>
+            <thead><tr><th>Papel</th><th>Onde aparece</th><th>Exemplo</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Vermelho de UI</strong></td><td>Apenas ações destrutivas</td><td>Botão/ação "Excluir", "Remover"</td></tr>
+                <tr><td><strong>Vermelho de dado</strong></td><td>Indicador negativo em gráfico/KPI</td><td>Tendência de queda <code>↓</code></td></tr>
+            </tbody>
+        </table>
+        <div class="aside warn">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <div>Como <b>dado</b> (queda), o vermelho é permitido livremente. Como <b>UI</b>, o vermelho é exclusivo de ações destrutivas — nunca decorativo, nunca em botões comuns.</div>
+        </div>
+        <p class="muted"><i class="fa-solid fa-circle-info"></i> Os hex do vermelho destrutivo e do cinza neutro ainda serão confirmados a partir de uma tela. Os valores exibidos acima são aproximações de referência.</p>
+
+        <h3><i class="fa-solid fa-circle-exclamation"></i> A única exceção: o verde comercial</h3>
+        <p>Existe <strong>uma exceção</strong> à regra "azul é a única cor de UI": botões de <strong>incentivo comercial para contratar ou expandir licenças</strong> são verdes (ex.: "Contratar mais licenças").</p>
+        <div class="aside tip">
+            <i class="fa-solid fa-tag"></i>
+            <div><b>Escopo estrito.</b> O verde só é permitido em CTAs de <b>contratar/expandir licenças</b>. Não vale para "salvar", "confirmar", "concluir" ou qualquer outra ação positiva — essas continuam azuis.</div>
+        </div>
+
+    <!-- 3. TIPOGRAFIA -->
+    <section id="s3">
+        <div class="sec-num">3</div>
+        <h2>Tipografia <span class="tag prov"><i class="fa-solid fa-flask"></i> provisório</span></h2>
+        <p class="lead">Uma família única para todo o sistema: <strong>Nunito Sans</strong> (variável), com fallback para a stack de fontes do sistema operacional.</p>
+
+        <div class="aside tip">
+            <i class="fa-solid fa-font"></i>
+            <div><b>Família única.</b> Não há fonte separada para títulos, números ou código. Tudo é Nunito Sans.<br>
+            <code style="font-size:12px;">--font-nunito-sans: "Nunito Sans Variable", "Nunito Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;</code></div>
+        </div>
+
+        <h3><i class="fa-solid fa-text-height"></i> Escala (inferida das telas)</h3>
+        <div class="type-row"><div class="sample" style="font-size:30px;font-weight:800;">R$ 2.395</div><div class="spec">Valor de KPI · ~30px · Bold 800</div></div>
+        <div class="type-row"><div class="sample" style="font-size:18px;font-weight:700;">Desempenho de Visitas no Período</div><div class="spec">Título de card · ~18px · Bold 700</div></div>
+        <div class="type-row"><div class="sample" style="font-size:14px;font-weight:600;">Visitas · Atividades · Gastos</div><div class="spec">Menu / abas · ~14px · Semibold 600</div></div>
+        <div class="type-row"><div class="sample" style="font-size:14px;font-weight:400;">Texto comum e rótulos de card</div><div class="spec">Corpo · ~14px · Regular 400</div></div>
+        <div class="type-row"><div class="sample" style="font-size:12px;font-weight:400;color:#94a3b8;">vs período anterior</div><div class="spec">Legenda · ~12px · Regular 400</div></div>
+
+        <div class="aside warn">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <div>Escala e pesos foram <b>inferidos das telas</b> já analisadas. Os valores exatos (px e weights) serão confirmados conforme novas telas forem revisadas. Conjunto de pesos provável: <b>Regular 400 · Semibold 600 · Bold 700/800</b>.</div>
+        </div>
+    </section>
+
+    <!-- 4. LAYOUT -->
+    <section id="s4">
+        <div class="sec-num">4</div>
+        <h2>Layout &amp; <span>espaçamento</span></h2>
+        <p class="lead">A regra de ouro que organiza qualquer barra de ação no Contele Teams.</p>
+
+        <h3><i class="fa-solid fa-arrows-left-right"></i> Filtros à esquerda, ações à direita</h3>
+        <p>Em <strong>toda tela que tenha barra de ação</strong>, os controles seguem esta divisão:</p>
+        <table>
+            <thead><tr><th>Esquerda · Filtros</th><th>Direita · Ações</th></tr></thead>
+            <tbody>
+                <tr><td>Filtro de data/período, "Filtrar", seletor de aba, pesquisa, seletor de item</td><td>Novo, Criar, Editar, Importar…</td></tr>
+            </tbody>
+        </table>
+
+        <div class="demo">
+            <div class="demo-label">Exemplo</div>
+            <div class="toolbar">
+                <div class="left">
+                    <span class="tb-btn"><i class="fa-regular fa-calendar"></i> Últimos 7 dias</span>
+                    <span class="tb-btn"><i class="fa-solid fa-sliders"></i> Filtrar</span>
+                    <span class="tb-chip">24/06/2026 – 30/06/2026 <i class="fa-solid fa-xmark" style="opacity:.5;"></i></span>
+                </div>
+                <div class="right">
+                    <span class="btn btn-primary"><i class="fa-solid fa-plus"></i> Novo Dashboard</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. COMPONENTES -->
+    <section id="s5">
+        <div class="sec-num">5</div>
+        <h2><span>Componentes</span></h2>
+        <p class="lead">O coração do guia. Os padrões dos componentes recorrentes das telas web.</p>
+
+        <h3><i class="fa-solid fa-hand-pointer"></i> Botões</h3>
+        <div class="demo">
+            <div class="demo-label">Hierarquia de botões</div>
+            <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;">
+                <span class="btn btn-primary"><i class="fa-solid fa-plus"></i> Primário</span>
+                <span class="btn btn-secondary">Secundário</span>
+                <span class="btn btn-success"><i class="fa-solid fa-arrow-up-right-dots"></i> Contratar licenças</span>
+                <span class="btn btn-danger"><i class="fa-regular fa-trash-can"></i> Excluir</span>
+            </div>
+        </div>
+        <table>
+            <thead><tr><th>Tipo</th><th>Estilo</th><th>Uso</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Primário</strong></td><td>Preenchido azul <code>#4a58ff</code> + texto branco</td><td>Ação principal da tela</td></tr>
+                <tr><td><strong>Secundário</strong></td><td>Preenchido cinza + texto azul <code>#4a58ff</code></td><td>Ações de menor importância</td></tr>
+                <tr><td><strong>Verde (exceção)</strong></td><td>Preenchido verde + texto branco</td><td>Só CTA de contratar/expandir licenças</td></tr>
+                <tr><td><strong>Destrutivo</strong></td><td>Vermelho</td><td>Excluir / remover</td></tr>
+            </tbody>
+        </table>
+
+        <h3><i class="fa-solid fa-bars"></i> Navegação &amp; estados de seleção</h3>
+        <p>Cada nível de navegação tem assinatura própria — e isso é <strong>intencional</strong>:</p>
+        <div class="demo">
+            <div class="demo-label">Menu principal · selecionado é discreto</div>
+            <div class="nav-main">
+                <span class="item sel"><i class="fa-regular fa-clock"></i> Resumo</span>
+                <span class="item"><i class="fa-regular fa-calendar"></i> Visitas</span>
+                <span class="item"><i class="fa-regular fa-circle-check"></i> Atividades</span>
+            </div>
+            <div class="demo-label" style="margin-top:20px;">Menu secundário · selecionado é evidente (azul + borda)</div>
+            <div class="nav-sec">
+                <span class="tab sel">Dashboard</span>
+                <span class="tab">Dashboard de Checklists</span>
+                <span class="tab">Dashboards Personalizados</span>
+            </div>
+        </div>
+        <table>
+            <thead><tr><th>Contexto</th><th>Fundo selecionado</th><th>Texto selecionado</th></tr></thead>
+            <tbody>
+                <tr><td>Menu principal</td><td><code>#f4f5fb</code></td><td><code>#686b8f</code> (discreto)</td></tr>
+                <tr><td>Menu secundário</td><td><code>#e2e3f5</code> + borda azul</td><td><code>#4a58ff</code> (evidente)</td></tr>
+            </tbody>
+        </table>
+
+        <h3><i class="fa-solid fa-square-check"></i> Barra de ações contextual</h3>
+        <p>Ao selecionar itens, surge uma barra flutuante com as ações em <strong>ícone outline + texto</strong>, lado a lado. É o substituto do menu kebab.</p>
+        <div class="demo">
+            <div class="demo-label">Aparece ao selecionar itens</div>
+            <div class="ctx-bar">
+                <span class="check"><i class="fa-solid fa-check"></i></span>
+                <span class="act"><i class="fa-solid fa-download"></i> Exportar</span>
+                <span class="act"><i class="fa-regular fa-folder-open"></i> Desarquivar</span>
+                <span class="act del"><i class="fa-regular fa-trash-can"></i> Excluir</span>
+            </div>
+        </div>
+
+        <h3><i class="fa-solid fa-gauge-high"></i> Card de KPI</h3>
+        <div class="demo">
+            <div class="demo-label">Rótulo + ícone → valor → tendência</div>
+            <div style="display:flex;gap:14px;flex-wrap:wrap;">
+                <div class="kpi"><div class="top">Reembolso total <i class="fa-solid fa-arrow-trend-up"></i></div><div class="val">R$ 2.395</div><div class="trend up"><i class="fa-solid fa-arrow-trend-up"></i> +737,6% <span>vs período anterior</span></div></div>
+                <div class="kpi"><div class="top">Horímetro Atual <i class="fa-regular fa-clock"></i></div><div class="val">13</div><div class="trend flat"><i class="fa-solid fa-minus"></i> 0,0% <span>vs período anterior</span></div></div>
+            </div>
+        </div>
+        <p>O indicador de tendência tem três estados: <span style="color:var(--data-positive);font-weight:700;">↑ verde (positivo)</span> · <span style="color:var(--data-neutral);font-weight:700;">— cinza (neutro)</span> · <span style="color:var(--data-negative);font-weight:700;">↓ vermelho (negativo)</span>.</p>
+
+        <h3><i class="fa-solid fa-circle-info"></i> Faixa de aviso (banner)</h3>
+        <p>Tipo único: <strong>informativo (azul)</strong>. Ícone + texto + link de ação + fechar.</p>
+        <div class="demo">
+            <div class="ui-banner">
+                <i class="fa-solid fa-circle-info"></i>
+                <span>O dashboard só aparece aqui se a opção "Incorporar relatório" estiver ativada e o compartilhamento liberado.</span>
+                <span class="link">Abrir em nova aba</span>
+                <i class="fa-solid fa-xmark x"></i>
+            </div>
+        </div>
+
+        <h3><i class="fa-solid fa-gear"></i> Ícone de configurações</h3>
+        <p>Telas com configuração própria exibem o ícone de <strong>engrenagem ⚙️ no canto superior direito, na linha do menu secundário</strong>, levando às configurações daquela tela.</p>
+
+        <h3><i class="fa-solid fa-table-list"></i> Tabela de listagem</h3>
+        <p>O componente central das telas de gestão (Usuários, Locais, etc.). Anatomia: seleção em massa, ordenação por coluna, reordenação por arrastar, contagem total e expansão de linha.</p>
+        <div class="demo">
+            <div class="demo-label">Estrutura da tabela</div>
+            <div class="tbl-wrap">
+                <div class="tbl-top"><span class="chk" style="display:inline-block;width:18px;height:18px;border:1.5px solid #cbd5e1;border-radius:5px;"></span><span>530 usuários</span></div>
+                <div class="tbl-row head">
+                    <span></span>
+                    <span class="col"><i class="fa-solid fa-grip-vertical grip"></i> Usuário <i class="fa-solid fa-sort sort"></i></span>
+                    <span class="col"><i class="fa-solid fa-grip-vertical grip"></i> Etiquetas <i class="fa-solid fa-sort sort"></i></span>
+                    <span class="col"><i class="fa-solid fa-grip-vertical grip"></i> Carteiras <i class="fa-solid fa-sort sort"></i></span>
+                </div>
+                <div class="tbl-row">
+                    <span class="chk"></span>
+                    <span class="user"><span class="ava"></span><span><span class="nm">Felipe Almeida Santos</span><br><span class="doc">234.440.432-90</span></span></span>
+                    <span><span class="pill-tag etq">comercial</span></span>
+                    <span><span class="pill-tag cart"><i class="fa-regular fa-folder"></i> Vendedores</span></span>
+                </div>
+                <div class="tbl-row">
+                    <span class="chk"></span>
+                    <span class="user"><span class="ava"></span><span><span class="nm">Carlos dos Santos</span><br><span class="doc">753.159.852-00</span></span></span>
+                    <span><span class="pill-tag etq">comercial <span class="more">+2</span></span></span>
+                    <span><span class="pill-tag cart"><i class="fa-regular fa-folder"></i> Vendedores</span></span>
+                </div>
+            </div>
+        </div>
+        <ul class="ico dot">
+            <li><strong>Cabeçalho:</strong> rótulo + ícone de ordenação (↕) + alça de arrastar (⠿) para reordenar colunas; seletor de colunas no canto direito.</li>
+            <li><strong>Linha:</strong> checkbox + avatar circular + nome (bold) + documento (cinza) + chevron <code>›</code> para expandir.</li>
+            <li><strong>Contagem total</strong> exibida no topo da tabela ("530 usuários").</li>
+        </ul>
+
+        <h3><i class="fa-solid fa-tags"></i> Tags &amp; badges</h3>
+        <div class="demo">
+            <div class="demo-label">Pílulas de etiqueta e carteira</div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+                <span class="pill-tag etq">comercial</span>
+                <span class="pill-tag etq">comercial <span class="more">+2</span></span>
+                <span class="pill-tag cart"><i class="fa-regular fa-folder"></i> Vendedores</span>
+            </div>
+        </div>
+        <ul class="ico dot">
+            <li><strong>Etiqueta:</strong> pílula contornada cuja <strong>cor é de dado</strong> (definida pelo usuário na etiqueta), não cor de UI. Excedentes viram contador <code>+N</code>.</li>
+            <li><strong>Carteira:</strong> pílula neutra (cinza) com ícone de pasta.</li>
+        </ul>
+
+        <h3><i class="fa-solid fa-toggle-on"></i> Toggle segmentado &amp; medidor</h3>
+        <div class="demo">
+            <div class="demo-label">Segmento (filtro de estado) + medidor de recurso</div>
+            <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
+                <span class="segmented"><span class="seg on">Ativos</span><span class="seg">Arquivados</span></span>
+                <span class="meter"><span class="ring"></span> 2 licenças disponíveis</span>
+            </div>
+        </div>
+        <ul class="ico dot">
+            <li><strong>Toggle segmentado:</strong> alterna estados de uma listagem (Ativos/Arquivados); fica à esquerda, como filtro.</li>
+            <li><strong>Medidor de recurso:</strong> pílula com anel de progresso; usa cor de alerta quando o recurso está baixo (ex.: poucas licenças).</li>
+        </ul>
+
+        <h3><i class="fa-solid fa-chart-pie"></i> Gráficos</h3>
+        <ul class="ico dot">
+            <li>Donut e pizza usam o <strong>azul primário <code>#4a58ff</code></strong> como cor de série.</li>
+            <li>As cores de status (ex.: Completas / Incompletas / Perdidas / Atrasadas) são definidas <strong>por gráfico/contexto</strong>, não são um set fixo global.</li>
+        </ul>
+    </section>
+
+    <!-- 6. ICONOGRAFIA -->
+    <section id="s6">
+        <div class="sec-num">6</div>
+        <h2>Iconografia</h2>
+        <p class="lead">Ícones consistentes em toda a interface.</p>
+        <ul class="ico dot">
+            <li><strong>Estilo linha/outline</strong>, traço fino e uniforme.</li>
+            <li>Nos menus, o ícone fica à esquerda do rótulo; em cards de KPI, no canto superior direito.</li>
+            <li>Na barra de ações contextual, ícone outline acompanha o texto da ação.</li>
+        </ul>
+        <div class="aside warn">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <div>A <b>biblioteca de ícones</b> usada no produto ainda será confirmada (ex.: Lucide, que é o padrão do shadcn/ui). Este documento usa Font Awesome apenas para ilustração.</div>
+        </div>
+    </section>
+
+    <!-- 7. ESTADOS -->
+    <section id="s7">
+        <div class="sec-num">7</div>
+        <h2>Estados</h2>
+        <p class="lead">Como os elementos se comportam em diferentes situações. Todos os estados abaixo são padrões confirmados do Contele Teams.</p>
+
+        <h3><i class="fa-solid fa-circle-check"></i> Seleção &amp; tendência</h3>
+        <table>
+            <thead><tr><th>Estado</th><th>Comportamento</th></tr></thead>
+            <tbody>
+                <tr><td><strong>Seleção</strong> (menus/abas)</td><td>Principal discreto (<code>#f4f5fb</code> + <code>#686b8f</code>) · Secundário evidente (<code>#e2e3f5</code> + <code>#4a58ff</code> + borda)</td></tr>
+                <tr><td><strong>Tendência</strong> (KPI)</td><td>↑ verde positivo · — cinza neutro · ↓ vermelho negativo</td></tr>
+            </tbody>
+        </table>
+
+        <h3><i class="fa-solid fa-toggle-on"></i> Estados de botão &amp; tela</h3>
+        <div class="demo">
+            <div class="demo-label">Padrão · hover · desabilitado · carregando · vazio · erro</div>
+            <div class="states-grid">
+                <div class="st-card"><div class="st-name">Padrão</div><span class="st-btn st-default"><i class="fa-solid fa-plus"></i> Novo</span></div>
+                <div class="st-card"><div class="st-name">Hover</div><span class="st-btn st-hover"><i class="fa-solid fa-plus"></i> Novo</span></div>
+                <div class="st-card"><div class="st-name">Desabilitado</div><span class="st-btn st-disabled"><i class="fa-solid fa-plus"></i> Novo</span></div>
+                <div class="st-card"><div class="st-name">Carregando</div><span class="st-btn st-loading"><span class="spin"></span> Carregando…</span></div>
+                <div class="st-card"><div class="st-name">Vazio</div><div class="st-empty"><i class="fa-regular fa-folder-open"></i>Nenhum item ainda</div></div>
+                <div class="st-card"><div class="st-name">Erro</div><div class="st-error"><i class="fa-solid fa-circle-exclamation"></i> Não foi possível carregar</div></div>
+            </div>
+        </div>
+        <div class="aside tip">
+            <i class="fa-solid fa-circle-check"></i>
+            <div><b>Carregando:</b> botão primário azul mantém o texto contextual ("Carregando…") com spinner circular. Demais estados seguem o padrão do shadcn/ui sobre o sistema azul do Contele.</div>
+        </div>
+    </section>
+
+    <!-- 8. BOAS PRÁTICAS -->
+    <section id="s8">
+        <div class="sec-num">8</div>
+        <h2>Boas <span>práticas</span></h2>
+        <p class="lead">Os do's &amp; don'ts que resumem as regras em decisões rápidas.</p>
+
+        <h4>Faça</h4>
+        <ul class="ico do">
+            <li><strong>Filtros à esquerda, ações à direita</strong> em toda barra de ação.</li>
+            <li>Use o <strong>azul <code>#4a58ff</code> como única cor de UI</strong>.</li>
+            <li>Deixe <strong>ações secundárias visíveis</strong> numa barra contextual com ícone + texto.</li>
+            <li>Reserve o <strong>vermelho de UI só para ações destrutivas</strong>.</li>
+            <li>Use o <strong>botão primário (azul)</strong> para a ação principal e o <strong>secundário (cinza + texto azul)</strong> para as demais.</li>
+            <li>Use o <strong>verde apenas em CTA de contratar/expandir licenças</strong> — a única exceção comercial.</li>
+        </ul>
+
+        <h4>Não faça</h4>
+        <ul class="ico dont">
+            <li>Não use <strong>menu kebab</strong> (três pontinhos na vertical).</li>
+            <li>Não use <strong>verde, laranja ou outras cores como cor de UI</strong> — só como cor de dado em gráficos.</li>
+            <li>Não use <strong>vermelho decorativo</strong> ou em botões comuns.</li>
+            <li>Não invente um <strong>estilo de seleção</strong> diferente do definido para cada menu.</li>
+        </ul>
+    </section>
+
+    <!-- 9. CHECKLIST -->
+    <section id="s9">
+        <div class="sec-num">9</div>
+        <h2>Checklist de <span>conformidade</span> <span class="tag todo"><i class="fa-solid fa-hourglass-half"></i> próximo passo</span></h2>
+        <p class="lead">Esta seção vai consolidar os critérios verificáveis de uma tela — e será a base do <strong>prompt avaliador</strong> que vamos montar para checar telas automaticamente.</p>
+        <ul class="ico dot">
+            <li>Cor de destaque é o azul <code>#4a58ff</code>? Sem outras cores de UI?</li>
+            <li>Filtros à esquerda e ações à direita?</li>
+            <li>Botão primário azul / secundário cinza usados corretamente?</li>
+            <li>Vermelho apenas em ação destrutiva?</li>
+            <li>Sem menu kebab?</li>
+            <li>Estados de seleção corretos por menu?</li>
+            <li>Ícones outline e consistentes?</li>
+            <li>Tipografia Nunito Sans?</li>
+        </ul>
+        <div class="aside info">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <div>Quando o conteúdo das seções estiver maduro, transformamos este checklist no <b>prompt de avaliação de telas</b>.</div>
+        </div>
+    </section>
+
+    <div class="divider" style="margin:36px auto;"></div>
+    <footer>
+        <b>Contele Teams · UI Style Guideline</b> — v1, documento vivo. Em refinamento contínuo.
+    </footer>
+
+</div>
+</body>
+</html>
