@@ -582,16 +582,19 @@
     <section id="s6">
         <div class="sec-num">6</div>
         <h2>Iconografia</h2>
-        <p class="lead">Ícones consistentes em toda a interface.</p>
+        <p class="lead">Ícones consistentes em toda a interface, extraídos de uma única biblioteca.</p>
+
+        <div class="aside tip">
+            <i class="fa-solid fa-icons"></i>
+            <div><b>Biblioteca oficial: Lucide.</b> Todo ícone deve ser extraído do <b>Lucide</b> (<a href="https://lucide.dev/icons/" style="color:var(--ui-primary);font-weight:700;">lucide.dev/icons</a>) — que também é o conjunto padrão do shadcn/ui. Não misturar com outras bibliotecas.</div>
+        </div>
+
         <ul class="ico dot">
-            <li><strong>Estilo linha/outline</strong>, traço fino e uniforme.</li>
+            <li><strong>Estilo linha/outline</strong>, traço fino e uniforme (característica nativa do Lucide).</li>
             <li>Nos menus, o ícone fica à esquerda do rótulo; em cards de KPI, no canto superior direito.</li>
             <li>Na barra de ações contextual, ícone outline acompanha o texto da ação.</li>
         </ul>
-        <div class="aside warn">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-            <div>A <b>biblioteca de ícones</b> usada no produto ainda será confirmada (ex.: Lucide, que é o padrão do shadcn/ui). Este documento usa Font Awesome apenas para ilustração.</div>
-        </div>
+        <p class="muted"><i class="fa-solid fa-circle-info"></i> Este documento usa Font Awesome apenas para ilustração; no produto, use sempre o Lucide.</p>
     </section>
 
     <!-- 7. ESTADOS -->
@@ -649,6 +652,7 @@
             <li>Não use <strong>verde, laranja ou outras cores como cor de UI</strong> — só como cor de dado em gráficos.</li>
             <li>Não use <strong>vermelho decorativo</strong> ou em botões comuns.</li>
             <li>Não invente um <strong>estilo de seleção</strong> diferente do definido para cada menu.</li>
+            <li>Não use ícones <strong>fora do Lucide</strong> nem misture bibliotecas de ícones.</li>
         </ul>
     </section>
 
